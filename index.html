@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>生命結構藍圖 | 奧茲學長</title>
+  <style>
+    :root {
+      --bg:#121212; --bg2:#1A1A1A; --text:#E0E0E0; --muted:rgba(224,224,224,.75);
+      --gold:#D4AF37; --gold2:#C09B28; --cyan:#00F0FF; --r:12px; --card:rgba(18,18,18,.96);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; 
+      font-family: system-ui, -apple-system, "PingFang TC", "Microsoft JhengHei", sans-serif;
+      color: var(--text); background: var(--bg); overflow-x: hidden; padding-bottom: 70px;
+      font-size: 16px; 
+      line-height: 1.6;
+    }
+    body:before {
+      content: ""; position: fixed; inset: 0; z-index: -1;
+      background: radial-gradient(900px 540px at 20% 10%, rgba(0,240,255,.08), transparent 60%),
+                  radial-gradient(900px 540px at 80% 15%, rgba(212,175,55,.08), transparent 60%);
+    }
+    .wrap { width: min(1120px, calc(100% - 24px)); margin: 0 auto; padding: 12px 0; }
+
+    /* 頂部 Hero */
+    .top-hero {
+      position: relative; padding: 16px; border-radius: var(--r);
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      border: 1px solid rgba(255,255,255,.10); margin-bottom: 10px;
+    }
+    .brand { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); }
+    .top-hero h1 { margin: 0; font-size: 15px; letter-spacing: .15em; color: var(--gold); font-weight: 900; }
+    .sub-desc { color: var(--muted); font-size: 14px; line-height: 1.5; margin: 6px 0; }
+    .tagline { border-left: 3px solid var(--gold); background: rgba(212,175,55,0.06); padding: 4px 10px; color: var(--gold); font-size: 12px; font-weight: 900; letter-spacing: .2em; margin: 8px 0; width: max-content; }
+    .hero-h2 { font-size: clamp(24px, 5vw, 36px); font-weight: 950; line-height: 1.3; margin: 0; }
+    .gold { color: var(--gold); }
+    
+    /* Hero Note 區塊 (包含新增的介紹) */
+    .hero-note {
+      border-left: 1px solid rgba(255,255,255,.18);
+      padding-left: 14px;
+      display: grid;
+      gap: 8px;
+      max-width: 820px;
+      margin-top: 12px;
+    }
+    .hero-note .cyan {
+      color: var(--cyan);
+      font-weight: 850;
+      letter-spacing: .06em;
+    }
+    .hero-note .muted {
+      color: rgba(224,224,224,.72);
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    /* 奧茲導覽列 */
+    .nav-bar {
+      position: fixed; bottom: 0; left: 0; right: 0; background: rgba(18,18,18,0.98);
+      backdrop-filter: blur(10px); border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex; justify-content: space-around; padding: 8px 0; z-index: 9999;
+    }
+    .nav-item { color: var(--muted); text-decoration: none; font-size: 12px; display: flex; flex-direction: column; align-items: center; gap: 3px; cursor: pointer; flex: 1; transition: 0.2s; }
+    .nav-item.active { color: var(--gold); font-weight: 900; }
+    .nav-icon { font-size: 20px; }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: fadeIn 0.3s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    @media (min-width: 1024px) {
+      .nav-bar { position: sticky; top: 0; bottom: auto; margin-bottom: 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: var(--card); }
+      .grid-layout { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+      .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    }
+
+    .card { background: var(--card); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--r); padding: 16px; margin-bottom: 10px; position: relative; }
+    .card h3 { margin: 0 0 10px; font-size: 16px; letter-spacing: .1em; display: flex; justify-content: space-between; align-items: center; }
+    
+    .input { width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 14px; border-radius: 8px; margin-bottom: 10px; font-size: 20px; outline: none; }
+    .input::placeholder { font-size: 16px; opacity: 0.7; }
+    .btn { background: var(--gold); color: #000; border: none; padding: 14px; border-radius: 8px; font-weight: 900; cursor: pointer; width: 100%; letter-spacing: 0.1em; transition: 0.2s; font-size: 20px; }
+    .btn:hover { background: var(--gold2); }
+    
+    .long-text { font-size: 15px; line-height: 1.6; color: rgba(224,224,224,0.95); white-space: pre-wrap; margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.1); }
+    .long-text h4 { color: var(--gold); margin: 16px 0 6px; font-size: 17px; border-left:3px solid var(--gold); padding-left:8px; font-weight: 900; }
+    .long-text p { margin-bottom: 8px; text-align: justify; }
+
+    .tip-box:hover::after {
+      content: attr(data-tip); position: absolute; bottom: 105%; left: 50%; transform: translateX(-50%);
+      background: var(--gold); color: #000; padding: 8px 12px; border-radius: 6px; font-size: 14px; font-weight: 900; white-space: pre-wrap; z-index: 100; width: 240px; line-height: 1.5; box-shadow: 0 6px 16px rgba(0,0,0,0.5);
+    }
+    
+    /* 高清圖表 */
+    canvas { width: 100% !important; height: 230px !important; border-radius: 6px; margin-top: 10px; display:block; background: transparent; }
+    
+    .big-num { font-size:36px; font-weight:900; color: #fff; margin-bottom: 2px; font-variant-numeric: tabular-nums; letter-spacing: -0.5px; }
+    .sub-info { font-size:13px; color:var(--muted); letter-spacing: 0.5px; }
+    
+    /* 雙靈魂標籤 (放大) */
+    .soul-badges { display:flex; gap:10px; justify-content:center; margin: 12px 0; flex-wrap:wrap; }
+    .s-tag { font-size:14px; font-weight:900; padding: 6px 16px; border-radius: 99px; border:1.5px solid; background:transparent; display:inline-block;}
+    .s-tag.solar { border-color:var(--gold); color:var(--gold); }
+    .s-tag.lunar { border-color:var(--cyan); color:var(--cyan); }
+
+    .month-item { display: flex; align-items: flex-start; gap: 8px; padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .month-tag { background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 4px; font-size: 13px; color: var(--gold); font-weight: bold; min-width: 40px; text-align: center; }
+    .month-desc { font-size: 14px; color: var(--muted); line-height: 1.5; }
+  </style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top-hero">
+    <div class="brand"><div class="dot"></div><h1>生命結構藍圖</h1></div>
+    <p class="sub-desc">輸入生日後，奧茲學長將為您生成包含「陽曆顯化」與「陰曆靈魂」的完整雙軌結構藍圖。</p>
+    <div class="tagline">結構藍圖導航</div>
+    <h2 class="hero-h2">人生所有的卡點，<span style="color:rgba(224,224,224,.88)">不是情緒問題</span>，是<span class="gold">結構問題</span>。</h2>
+    
+    <div class="hero-note">
+      <div class="cyan">雞湯給你安慰，地圖給你路徑。</div>
+      <div class="muted">把「陽曆／陰曆主命數」與「陽曆／陰曆靈魂等級」轉成可落地的方向：更少消耗、更清楚、更穩定。</div>
+      <div class="muted" style="margin-top:10px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.15);">
+        <span style="color:var(--gold);font-weight:bold;">奧茲學長 (Oz)</span><br>
+        20年實戰經驗的生命結構工程師。擅長以獨創「雙軌解析」系統，將玄學轉化為科學的結構地圖。不談宿命，只談如何調校你的「原廠設定」，讓你的人生從「卡關」變「順流」。
+      </div>
+    </div>
+
+  </header>
+
+  <section class="card">
+    <input id="username" class="input" placeholder="請輸入姓名（選填）" />
+    <input id="birthdate" class="input" placeholder="陽曆生日 (必填，例 19780101)" value="19780808" />
+    <input id="lunarBirthdate" class="input" placeholder="陰曆生日 (選填，若留空系統將自動換算)" />
+    <button id="btnRunOz" class="btn">生成生命結構藍圖分析</button>
+  </section>
+
+  <nav class="nav-bar">
+    <div class="nav-item active" onclick="switchTab('tab-labels', this)"><span class="nav-icon">✨</span><span>雙軌命盤</span></div>
+    <div class="nav-item" onclick="switchTab('tab-matrix', this)"><span class="nav-icon">📊</span><span>結構矩陣</span></div>
+    <div class="nav-item" onclick="switchTab('tab-trend', this)"><span class="nav-icon">📈</span><span>趨勢策略</span></div>
+    <div class="nav-item" onclick="window.open('https://www.threads.net/@koi54889101')"><span class="nav-icon">📱</span><span>奧茲學長</span></div>
+  </nav>
+
+  <div id="tab-labels" class="tab-content active">
+    <div class="card" style="text-align:center; background: linear-gradient(135deg, rgba(212,175,55,0.05), transparent);">
+      <h2 id="displayName" style="margin-bottom:6px; font-size:20px; font-weight:900;">你好，探索者</h2>
+      <div class="soul-badges" id="soulTagsContainer">
+        <div class="s-tag solar">陽曆：等待分析</div>
+        <div class="s-tag lunar">陰曆：等待分析</div>
+      </div>
+      <p style="color:var(--muted); font-size:13px; margin-top:6px;">輸入生日後，即刻解鎖您的陽曆顯化與陰曆靈魂結構。</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="card" style="text-align:center;">
+        <h3 style="justify-content:center; color:var(--gold);">☀️ 陽曆顯化 (外在)</h3>
+        <div class="big-num" id="homeSolarMain">—</div>
+        <div class="sub-info">陽曆主命數</div>
+        <div style="margin-top:10px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.1);">
+            <div class="big-num" style="font-size:22px; color:var(--text);" id="homeSolarSoul">—</div>
+            <div class="sub-info">陽曆靈魂等級</div>
+        </div>
+      </div>
+      <div class="card" style="text-align:center;">
+        <h3 style="justify-content:center; color:var(--cyan);">🌙 陰曆靈魂 (內在)</h3>
+        <div class="big-num" id="homeLunarMain">—</div>
+        <div class="sub-info">陰曆主命數</div>
+        <div style="margin-top:10px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.1);">
+            <div class="big-num" style="font-size:22px; color:var(--text);" id="homeLunarSoul">—</div>
+            <div class="sub-info">陰曆靈魂等級</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3><span>雙軌生命結構與靈魂學制解析</span></h3>
+      <div class="long-text">
+        <h4>▍為什麼需要看「陽曆」與「陰曆」兩套劇本？</h4>
+        <p>人生這場戲，其實我們都拿到了兩本劇本。大多數的命理分析只看見了你的「陽曆劇本」，這代表了你的<b>外在顯化、社會功能、職場角色</b>，以及你如何運用理性思維來處理世界上的問題。陽曆主命數，是你身上穿的那件制服，決定了社會如何識別你，也決定了你用什麼工具來開拓疆土。</p>
+        <p>然而，奧茲學長在二十年的教學現場發現，許多人的「卡點」並非來自外在能力不足，而是來自內在的衝突。這就是「陰曆劇本」的重要性。陰曆代表了你的<b>靈魂本質、潛意識安全感、情感需求</b>，以及那些在夜深人靜時才會浮現的真實渴望。它不像陽曆那樣顯眼，但它卻是支撐你整個人生大廈的地基。如果陽曆是車子的外型與馬力，陰曆就是這台車的底盤與油箱。</p>
+        <p>唯有當陽曆（顯化）與陰曆（靈魂）兩者同步運作，外在的追求能滿足內在的渴望，內在的安全感能支撐外在的挑戰時，生命結構才會進入「順流」狀態。這就是我們強調「雙軌並行」的原因。</p>
+        
+        <h4>▍七階靈魂等級：你在哪一個年級？</h4>
+        <p>在奧茲的結構藍圖中，我們將靈魂的成熟度與學習歷程，比喻為一套完整的「七階學制」。這不是階級高低之分，而是「目前修習課業」的不同。透過你的生日數字結構（包含是否有連線、是否有圈數），我們可以判定你目前的靈魂年級：</p>
+        <p><b>1. 靈魂幼稚園生 (探索期)</b>：這是最純真、單純的階段。你對世界充滿好奇，但經驗尚淺。你的功課是「嘗試」，需要像孩子一樣大膽犯錯，並學習依賴與信任引導者。你的直覺很強，但容易受情緒波動影響。</p>
+        <p><b>2. 靈魂小學生 (紀律期)</b>：進入了建立規矩的階段。你開始學習社會的SOP，重視對錯與標準。你的功課是「模仿與紀律」，透過有樣學樣來建立基礎生存能力，這階段最需要好的老師與榜樣。</p>
+        <p><b>3. 靈魂國中生 (群體期)</b>：開始有了同儕意識與叛逆心。你非常在乎朋友與歸屬感，甚至會為了群體而挑戰權威。你的功課是「人際互動」，在群體中找尋自己的定位，學會分辨益友與損友。</p>
+        <p><b>4. 靈魂高中生 (建構期)</b>：思維開始多元化，不再滿足於標準答案。你充滿創意與批判性思考，想要建構屬於自己的價值觀。你的功課是「定義自我」，從混亂中理出頭緒，為將來的獨立做準備。</p>
+        <p><b>5. 靈魂大學生 (真理期)</b>：進入了專精研究的領域。你對於某個領域有極深的熱情與鑽研，追求的是真理與本質。你的功課是「深度研究」，將知識轉化為智慧，並開始建立自己的專業權威。</p>
+        <p><b>6. 靈魂研究生 (覺察期)</b>：開始往內走，探討生命更深層的意義。你具備高度的獨立思考能力，常能看透事物的本質。你的功課是「內在覺察」，整合知識與靈性，並處理更深層的業力課題。</p>
+        <p><b>7. 傑出校友 (實踐期)</b>：這是一個特殊的階段，通常代表你的靈魂資歷已深，此生是帶著任務「回來服務」或「整合所學」的。你的功課不再是學習，而是「給予與實踐」，成為他人的燈塔，用身教來影響世界。</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-matrix" class="tab-content">
+    <div class="grid-layout">
+      <div class="card tip-box" data-tip="【陽曆顯化】代表你在社會、職場與社交場合中展現的才華天賦。">
+        <h3><span>陽曆顯化矩陣</span> <span style="font-size:12px; background:rgba(212,175,55,0.2); padding:2px 8px;">外在</span></h3>
+        <div style="font-size:30px; font-weight:900;" id="lifeYangFinal">—</div>
+        <p style="font-size:13px; color:var(--muted); margin-top:4px;">靈魂等級：<b id="solarSoul">—</b></p>
+      </div>
+      <div class="card tip-box" data-tip="【陰曆靈魂】代表你內在潛意識、安全感來源與獨處時的真實面貌。">
+        <h3><span>陰曆靈魂矩陣</span> <span style="font-size:12px; background:rgba(0,240,255,0.1); padding:2px 8px; color:var(--cyan);">內在</span></h3>
+        <div style="font-size:30px; font-weight:900;" id="lifeYinFinal">—</div>
+        <p style="font-size:13px; color:var(--muted); margin-top:4px;">靈魂等級：<b id="lunarSoul">—</b></p>
+      </div>
+      <div class="card tip-box" data-tip="【能量氣象】結合流年、流月與流日，計算出你目前的能量綜合頻率。">
+        <h3><span>今日氣象總評</span> <span id="weatherEmoji">⛅️</span></h3>
+        <div style="font-size:30px; font-weight:900; color:var(--gold);" id="overallBig">--%</div>
+        <p id="weatherHint" style="font-size:13px; margin-top:4px;"></p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:4px;">
+      <h3><span>結構諮詢詢問</span></h3>
+      <div class="long-text" style="margin-bottom:10px; border-top:none; padding-top:0;">
+        <h4>▍奧茲學長結構提問指南</h4>
+        <p>奧茲學長建議您將困惑轉化為「結構性提問」：</p>
+        <p><b>1. 針對「內外衝突」提問：</b><br>例如：陽曆1號人，陰曆9號人。問：「學長，我外在強勢但內心渴望奉獻，職場上常委屈，如何平衡？」</p>
+        <p><b>2. 針對「靈魂等級」提問：</b><br>例如：我是靈魂小學生。問：「我最近接了需要高度獨立的專案，壓力大，如何用小學生的模仿優勢過關？」</p>
+      </div>
+      <textarea id="question" class="input" style="height:80px; font-size:16px;" placeholder="請輸入您想詢問的結構問題..."></textarea>
+      <button id="btnAskOz" class="btn">提交詢問</button>
+      <div id="qaAnswer" style="margin-top:12px; font-size:14px; color:var(--muted); white-space:pre-wrap; border-top:1px solid rgba(255,255,255,0.1); padding-top:10px;"></div>
+    </div>
+  </div>
+
+  <div id="tab-trend" class="tab-content">
+    <div class="card">
+      <h3><span>年度流年趨勢分析</span></h3>
+      <div id="trendHeaderContainer" style="margin-bottom:10px; font-size:14px; color:var(--muted); line-height:1.6;">
+         <div id="trendHeaderSolar" style="color:var(--gold);">陽曆流年：(等待分析)</div>
+         <div id="trendHeaderLunar" style="color:var(--cyan);">陰曆流年：(等待分析)</div>
+      </div>
+      
+      <div class="long-text" id="yearAdvice" style="margin-bottom:16px;">
+        （請在第一頁輸入生日並生成分析，此處將自動顯示詳解）
+      </div>
+      
+      <canvas id="monthChart" height="230"></canvas>
+      
+      <div style="margin-top:20px;">
+        <h4>▍全年度全息流月指引</h4>
+        <div id="monthsList" style="margin-top:10px;"></div>
+      </div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <a href="https://forms.gle/YvZBjnNhASWcXxAX7" target="_blank" class="btn" style="text-decoration:none; display:block;">預約奧茲學長一對一深度解盤</a>
+    </div>
+  </div>
+</div>
+
+<script>
+const API_URL = "/.netlify/functions/ai_reading"; 
+
+function sumDigits(n) { return String(n).split('').reduce((a,c)=>a+parseInt(c),0); }
+function calcPath(numVal) {
+  let temp = numVal;
+  const steps = [temp];
+  while (temp > 9) {
+    temp = sumDigits(temp);
+    steps.push(temp);
+  }
+  if (steps.length === 1) {
+    steps.push(temp);
+  }
+  return {
+    path: steps.map((value, index) => index === 0 ? String(value).padStart(2, '0') : String(value)).join('/'),
+    main: temp
+  };
+}
+
+const FLOW_DESC = {
+  1: "🌱 播種期：新的開始，適合主動出擊。", 2: "🤝 合作期：放慢腳步，重視連結與細節。",
+  3: "✨ 創意期：表達自我，享受社交與娛樂。", 4: "🧱 建構期：務實工作，建立穩定基礎。",
+  5: "🎡 變化期：擁抱自由，嘗試新事物。", 6: "❤️ 關懷期：回歸家庭，承擔責任。",
+  7: "🧘 內省期：獨處思考，整理內在。", 8: "💎 豐收期：展現權力，爭取成果。",
+  9: "🍂 完結期：清理舊物，為明年做準備。"
+};
+
+function switchTab(id, el) {
+  document.querySelectorAll('.tab-content').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+
+window.onload = () => {
+  const savedName = localStorage.getItem('oz_name');
+  const savedBirth = localStorage.getItem('oz_birth');
+  const savedLunar = localStorage.getItem('oz_lunar');
+  if(savedName) document.getElementById('username').value = savedName;
+  if(savedBirth) document.getElementById('birthdate').value = savedBirth;
+  if(savedLunar) document.getElementById('lunarBirthdate').value = savedLunar;
+};
+
+document.getElementById('btnRunOz').addEventListener('click', async () => {
+  const bd = document.getElementById('birthdate').value.trim();
+  const nm = document.getElementById('username').value.trim();
+  const lbd = document.getElementById('lunarBirthdate').value.trim();
+  
+  if(!bd) return alert("請輸入陽曆生日");
+
+  localStorage.setItem('oz_name', nm);
+  localStorage.setItem('oz_birth', bd);
+  localStorage.setItem('oz_lunar', lbd);
+
+  document.getElementById('displayName').textContent = nm ? `你好，${nm}` : '你好，探索者';
+
+  const solarTag = document.querySelector('.s-tag.solar');
+  const lunarTag = document.querySelector('.s-tag.lunar');
+  
+  solarTag.textContent = "分析中...";
+  lunarTag.textContent = "分析中...";
+
+  try {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        mode: "report",
+        birthdate: bd,
+        name: nm,
+        lunarBirthdate: lbd
+      })
+    });
+    
+    if(!res.ok) throw new Error("後端連線失敗");
+    const json = await res.json();
+    const data = json.parsed;
+
+    document.getElementById('homeSolarMain').textContent = data.solarMain;
+    document.getElementById('homeSolarSoul').textContent = data.solarSoul;
+    document.getElementById('homeLunarMain').textContent = data.lunarMain;
+    document.getElementById('homeLunarSoul').textContent = data.lunarSoul;
+    
+    solarTag.textContent = `陽曆：${data.solarSoul}`;
+    lunarTag.textContent = `陰曆：${data.lunarSoul}`;
+    
+    document.getElementById('lifeYangFinal').textContent = data.solarMain;
+    document.getElementById('solarSoul').textContent = data.solarSoul;
+    document.getElementById('lifeYinFinal').textContent = data.lunarMain;
+    document.getElementById('lunarSoul').textContent = data.lunarSoul;
+
+    if(json.overall_percent) {
+        document.getElementById('overallBig').textContent = json.overall_percent + "%";
+        document.getElementById('weatherEmoji').textContent = json.overall_icon || "⛅️";
+        document.getElementById('weatherHint').textContent = json.overall_label || "";
+    }
+
+    const sYearFull = data.solarYear;
+    const lYearFull = data.lunarYear; 
+    
+    document.getElementById('trendHeaderSolar').textContent = `陽曆流年：${sYearFull}`;
+    document.getElementById('trendHeaderLunar').textContent = `陰曆流年：${lYearFull}`;
+
+    const getFlowNum = (s) => {
+        if(!s) return 0;
+        const parts = String(s).split('/');
+        return parseInt(parts[parts.length-1]) || 0;
+    };
+    
+    const flowY = getFlowNum(sYearFull); 
+    const lFlowY = getFlowNum(lYearFull);
+    
+    const advice = `
+      <div style="margin-bottom:20px;">
+        <h4 style="color:var(--gold); border-left:4px solid var(--gold); padding-left:10px; margin:0 0 8px 0; font-size:18px;">
+          外在陽曆流年：(流年${flowY})
+        </h4>
+        <p style="margin:0; font-size:15px; color:#e0e0e0;">
+          今年您的陽曆流年走到了【${flowY}】，這是一個${FLOW_DESC[flowY].split('：')[0]}。<br>
+          ${FLOW_DESC[flowY].split('：')[1]}<br><br>
+          建議您善用陽曆${data.solarMain}號人的特質，在行動上保持${parseInt(data.solarSoul)>=4?'彈性與創意':'紀律與執行力'}。
+        </p>
+      </div>
+
+      <div>
+        <h4 style="color:var(--gold); border-left:4px solid var(--gold); padding-left:10px; margin:0 0 8px 0; font-size:18px;">
+          內在陰曆流年：(流年${lFlowY})
+        </h4>
+        <p style="margin:0; font-size:15px; color:#e0e0e0;">
+          您的內在感受走到了【${lFlowY}】，這是一個${FLOW_DESC[lFlowY].split('：')[0]}。<br>
+          ${FLOW_DESC[lFlowY].split('：')[1]}
+        </p>
+      </div>
+    `;
+    document.getElementById('yearAdvice').innerHTML = advice;
+
+    drawChartAndList(flowY);
+
+  } catch(e) {
+    alert("分析發生錯誤：" + e.message);
+    solarTag.textContent = "錯誤";
+    lunarTag.textContent = "錯誤";
+  }
+});
+
+document.getElementById('btnAskOz').addEventListener('click', async () => {
+  const q = document.getElementById('question').value.trim();
+  if(!q) return alert("請輸入問題");
+  
+  const div = document.getElementById('qaAnswer');
+  div.textContent = "奧茲學長正在連線分析中...";
+  
+  const reportSnapshot = {
+      parsed: {
+          solarMain: document.getElementById('lifeYangFinal').textContent,
+          lunarMain: document.getElementById('lifeYinFinal').textContent,
+          solarSoul: document.getElementById('solarSoul').textContent,
+          lunarSoul: document.getElementById('lunarSoul').textContent,
+          solarYear: document.getElementById('trendHeaderSolar').textContent 
+      }
+  };
+
+  try {
+      const res = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+              mode: "qa",
+              question: q,
+              report: reportSnapshot
+          })
+      });
+      const json = await res.json();
+      div.textContent = json.text || "（無法取得回應，請稍後再試）";
+  } catch(e) {
+      div.textContent = "連線逾時，請檢查網路或稍後再試。";
+  }
+});
+
+function drawChartAndList(flowY) {
+  const canvas = document.getElementById('monthChart');
+  const cssHeight = 230; 
+  
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  
+  canvas.width = rect.width * dpr;
+  canvas.height = cssHeight * dpr;
+  canvas.style.width = '100%';
+  canvas.style.height = `${cssHeight}px`;
+  
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  
+  const w = rect.width;
+  const h = cssHeight;
+  
+  ctx.clearRect(0, 0, w, h);
+  
+  const padL=40, padT=20, padB=30, padR=20, innerW=w-padL-padR, innerH=h-padT-padB;
+
+  ctx.strokeStyle="rgba(255,255,255,0.08)"; ctx.lineWidth=1;
+  for(let i=0;i<=4;i++){
+    let y = padT+(innerH/4)*i; 
+    ctx.beginPath(); ctx.moveTo(padL,y); ctx.lineTo(padL+innerW,y); ctx.stroke();
+  }
+  
+  ctx.fillStyle="rgba(255,255,255,.6)"; ctx.font="12px sans-serif"; ctx.textAlign="right";
+  const yLabels = [100, 75, 50, 25, 0];
+  for(let i=0;i<=4;i++){
+    let y = padT+(innerH/4)*i; ctx.fillText(yLabels[i], padL-8, y+4);
+  }
+  
+  const data = [];
+  const listEl = document.getElementById('monthsList');
+  listEl.innerHTML = "";
+  
+  for(let i=1; i<=12; i++) {
+    const fmResult = calcPath(flowY + i);
+    const fm = fmResult.main;
+    let val = [1,4,8].includes(fm)? 80 : ([2,6].includes(fm)? 60 : 40); 
+    data.push(val);
+    
+    const item = document.createElement('div');
+    item.className = 'month-item';
+    item.innerHTML = `<div class="month-tag">流月${fmResult.path}</div><div class="month-desc">${i}月：${FLOW_DESC[fm]}</div>`;
+    listEl.appendChild(item);
+  }
+
+  let pts = data.map((v,i)=>({x:padL+(innerW/11)*i, y:padT+(1-Math.min(100,Math.max(0,v))/100)*innerH}));
+  
+  ctx.save();
+  ctx.beginPath(); 
+  ctx.moveTo(pts[0].x, pts[0].y);
+  pts.forEach(p=>ctx.lineTo(p.x,p.y));
+  
+  ctx.shadowBlur = 15;
+  ctx.shadowColor = "rgba(0, 240, 255, 0.8)"; 
+  ctx.lineWidth = 3;
+  ctx.strokeStyle = "rgba(0, 240, 255, 0.6)"; 
+  ctx.stroke();
+  ctx.restore();
+
+  const grad = ctx.createLinearGradient(0,padT,0,h-padB);
+  grad.addColorStop(0,"#00F0FF"); grad.addColorStop(1,"#FF0080");
+
+  ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y);
+  pts.forEach(p=>ctx.lineTo(p.x,p.y));
+  ctx.strokeStyle = grad; ctx.lineWidth = 3; ctx.lineCap = "round"; ctx.lineJoin = "round";
+  ctx.stroke(); 
+
+  pts.forEach(p=>{ 
+    ctx.beginPath(); ctx.arc(p.x,p.y, 4, 0, 6.28); 
+    ctx.fillStyle="#FFFFFF"; ctx.fill();
+    ctx.strokeStyle="rgba(0,0,0,0.5)"; ctx.lineWidth=1; ctx.stroke();
+  });
+  
+  ctx.fillStyle="rgba(255,255,255,.6)"; ctx.textAlign="center";
+  for(let i=0; i<12; i++){ ctx.fillText(`${i+1}月`, pts[i].x, h-padB+15); }
+}
+
+window.addEventListener('resize', () => {
+    const t = document.getElementById('trendHeaderSolar').textContent;
+    if(t.includes("流年")) {
+        const parts = t.split("流年：");
+        const num = parseInt(parts[1].split('/').pop()); 
+        if(!isNaN(num)) drawChartAndList(num);
+    }
+});
+</script>
+</body>
+</html>
