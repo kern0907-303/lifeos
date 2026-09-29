@@ -1,12 +1,12 @@
-// netlify/functions/ai_reading.js
-// 修正版：本地運算 + 回傳 lunar_parsed + 嚴禁 Markdown 符號
+// Cloudflare Worker：本地運算 + 回傳 lunar_parsed + 嚴禁 Markdown 符號
 
-exports.handler = async (event) => {
-  if (event.httpMethod === "OPTIONS") return resp(200, { ok: true });
-  if (event.httpMethod !== "POST") return resp(405, { error: "Method Not Allowed" });
+export default {
+  async fetch(request, env) {
+  if (request.method === "OPTIONS") return resp(200, { ok: true });
+  if (request.method !== "POST") return resp(405, { error: "Method Not Allowed" });
 
   try {
-    const body = safeJsonParse(event.body);
+    const body = safeJsonParse(await request.text());
     const mode = String(body.mode || "reading").trim();
     const birthdate = String(body.birthdate || "").trim();
     const name = String(body.name || "").trim();
@@ -89,8 +89,8 @@ exports.handler = async (event) => {
     // ----------------------------
     // AI (OpenAI)
     // ----------------------------
-    const apiKey = process.env.OPENAI_API_KEY;
-    const model = process.env.OPENAI_MODEL || "gpt-4o-mini";
+    const apiKey = env.OPENAI_API_KEY;
+    const model = env.OPENAI_MODEL || "gpt-4o-mini";
 
     if (!apiKey) return resp(200, { text: "（小幫手這邊雲層偏厚，請檢查 API Key。）" });
 
@@ -120,6 +120,7 @@ exports.handler = async (event) => {
   } catch (err) {
     console.error("[ai_reading] FAILED:", err);
     return resp(200, { text: "（系統忙碌中，請稍後再試。）" });
+  }
   }
 };
 
@@ -361,11 +362,15 @@ function calcNumerologyWithTarget(y, m, d, targetY, targetM, targetD, sign) {
 }
 
 function resp(statusCode, obj) {
-  return {
-    statusCode,
-    headers: { "Content-Type": "application/json; charset=utf-8", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "POST, OPTIONS", "Access-Control-Allow-Headers": "Content-Type" },
-    body: JSON.stringify(obj),
-  };
+  return new Response(JSON.stringify(obj), {
+    status: statusCode,
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
+    },
+  });
 }
 function safeJsonParse(s) { try { return JSON.parse(s || "{}"); } catch { return {}; } }
 function parseDateStr(s) {
