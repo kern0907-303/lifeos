@@ -77,7 +77,7 @@ export default {
       return resp(200, {
         ok: true,
         parsed: parsed,
-        raw_result: `主命數 ${solarResult.main}, ${lunarResult.main}\n靈魂等級陽曆 ${solarResult.soul}\n靈魂等級陰曆 ${lunarResult.soul}\n`,
+        raw_result: `陽曆主命數 ${solarResult.main}\n陰曆主命數 ${lunarResult.main}\n進階學習提醒：陽曆 ${solarResult.soul}、陰曆 ${lunarResult.soul}\n`,
         overall_percent: ov.percent,
         overall_icon: ov.emoji,
         overall_label: ov.label,
@@ -422,11 +422,11 @@ function avgScore(a, b){
 function buildQaPrompt({ question, analysisMode }){
   const q = String(question || "").trim();
   if(analysisMode === "core") return `請回應使用者問題。解析模式：主命數。以命盤為依據。\n${q}`;
-  return `請回應使用者問題。參考整體能量氣象。\n${q}`;
+  return `請回應使用者問題。參考目前的生命節奏提醒。\n${q}`;
 }
 function buildReadingPrompt({ analysisMode }){
   if(analysisMode === "core") return `請生成一段「陽曆／陰曆主命數分析」。`;
-  return `請生成一段「今日能量解讀」。`;
+  return `請生成一段「今日生命節奏提醒」。`;
 }
 async function callOpenAIResponsesWithTimeout({ apiKey, model, system, userPrompt, contextPack, timeoutMs }) {
   // [已修復] 使用正確的 Chat Completions API 結構

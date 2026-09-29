@@ -101,7 +101,7 @@
     .big-num { font-size:36px; font-weight:900; color: #fff; margin-bottom: 2px; font-variant-numeric: tabular-nums; letter-spacing: -0.5px; }
     .sub-info { font-size:13px; color:var(--muted); letter-spacing: 0.5px; }
     
-    /* 雙靈魂標籤 (放大) */
+    /* 雙軌閱讀標籤 */
     .soul-badges { display:flex; gap:10px; justify-content:center; margin: 12px 0; flex-wrap:wrap; }
     .s-tag { font-size:14px; font-weight:900; padding: 6px 16px; border-radius: 99px; border:1.5px solid; background:transparent; display:inline-block;}
     .s-tag.solar { border-color:var(--gold); color:var(--gold); }
@@ -116,17 +116,17 @@
 
 <div class="wrap">
   <header class="top-hero">
-    <div class="brand"><div class="dot"></div><h1>生命結構藍圖</h1></div>
-    <p class="sub-desc">輸入生日後，艾瑞克將為您生成包含「陽曆顯化」與「陰曆靈魂」的完整雙軌結構藍圖。</p>
-    <div class="tagline">結構藍圖導航</div>
-    <h2 class="hero-h2">人生所有的卡點，<span style="color:rgba(224,224,224,.88)">不是情緒問題</span>，是<span class="gold">結構問題</span>。</h2>
+    <div class="brand"><div class="dot"></div><h1>生命數字探索</h1></div>
+    <p class="sub-desc">輸入生日，從外在慣性與內在需求兩個角度，探索你的生命數字。</p>
+    <div class="tagline">認識自己，找到適合的方向</div>
+    <h2 class="hero-h2">有些事情卡住，不是因為不夠努力，而是還沒看見<span class="gold">真正影響結果的關鍵因素</span>。</h2>
     
     <div class="hero-note">
       <div class="cyan">雞湯給你安慰，地圖給你路徑。</div>
-      <div class="muted">把「陽曆／陰曆主命數」與「陽曆／陰曆靈魂等級」轉成可落地的方向：更少消耗、更清楚、更穩定。</div>
+      <div class="muted">數字不是限制，而是協助你認識天賦、盲點、人生節奏與選擇方向的工具。</div>
       <div class="muted" style="margin-top:10px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.15);">
         <span style="color:var(--gold);font-weight:bold;">艾瑞克</span><br>
-        20年實戰經驗的生命結構工程師。擅長以獨創「雙軌解析」系統，將玄學轉化為科學的結構地圖。不談宿命，只談如何調校你的「原廠設定」，讓你的人生從「卡關」變「順流」。
+        以生命數字陪你整理外在慣性與內在需求，從看懂自己開始，找到較適合自己的行動方式。
       </div>
     </div>
 
@@ -136,13 +136,13 @@
     <input id="username" class="input" placeholder="請輸入姓名（選填）" />
     <input id="birthdate" class="input" placeholder="陽曆生日 (必填，例 19780101)" value="19780808" />
     <input id="lunarBirthdate" class="input" placeholder="陰曆生日 (選填，若留空系統將自動換算)" />
-    <button id="btnRunErick" class="btn">生成生命結構藍圖分析</button>
+    <button id="btnRunErick" class="btn">探索我的生命數字</button>
   </section>
 
   <nav class="nav-bar">
-    <div class="nav-item active" onclick="switchTab('tab-labels', this)"><span class="nav-icon">✨</span><span>雙軌命盤</span></div>
-    <div class="nav-item" onclick="switchTab('tab-matrix', this)"><span class="nav-icon">📊</span><span>結構矩陣</span></div>
-    <div class="nav-item" onclick="switchTab('tab-trend', this)"><span class="nav-icon">📈</span><span>趨勢策略</span></div>
+    <div class="nav-item active" onclick="switchTab('tab-labels', this)"><span class="nav-icon">✨</span><span>生命數字</span></div>
+    <div class="nav-item" onclick="switchTab('tab-matrix', this)"><span class="nav-icon">📊</span><span>天賦與模式</span></div>
+    <div class="nav-item" onclick="switchTab('tab-trend', this)"><span class="nav-icon">📈</span><span>年度提醒</span></div>
     <div class="nav-item" onclick="window.open('https://www.facebook.com/NAS448/')"><span class="nav-icon">📱</span><span>艾瑞克</span></div>
   </nav>
 
@@ -150,82 +150,69 @@
     <div class="card" style="text-align:center; background: linear-gradient(135deg, rgba(212,175,55,0.05), transparent);">
       <h2 id="displayName" style="margin-bottom:6px; font-size:20px; font-weight:900;">你好，探索者</h2>
       <div class="soul-badges" id="soulTagsContainer">
-        <div class="s-tag solar">陽曆：等待分析</div>
-        <div class="s-tag lunar">陰曆：等待分析</div>
+        <div class="s-tag solar">陽曆主命數：等待分析</div>
+        <div class="s-tag lunar">陰曆主命數：等待分析</div>
       </div>
-      <p style="color:var(--muted); font-size:13px; margin-top:6px;">輸入生日後，即刻解鎖您的陽曆顯化與陰曆靈魂結構。</p>
+      <p style="color:var(--muted); font-size:13px; margin-top:6px;">輸入生日後，從兩個閱讀角度整理你的生命數字。</p>
     </div>
 
     <div class="grid-2">
       <div class="card" style="text-align:center;">
-        <h3 style="justify-content:center; color:var(--gold);">☀️ 陽曆顯化 (外在)</h3>
+        <h3 style="justify-content:center; color:var(--gold);">☀️ 陽曆主命數（外在慣性）</h3>
         <div class="big-num" id="homeSolarMain">—</div>
         <div class="sub-info">陽曆主命數</div>
-        <div style="margin-top:10px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.1);">
-            <div class="big-num" style="font-size:22px; color:var(--text);" id="homeSolarSoul">—</div>
-            <div class="sub-info">陽曆靈魂等級</div>
-        </div>
       </div>
       <div class="card" style="text-align:center;">
-        <h3 style="justify-content:center; color:var(--cyan);">🌙 陰曆靈魂 (內在)</h3>
+        <h3 style="justify-content:center; color:var(--cyan);">🌙 陰曆主命數（內在需求）</h3>
         <div class="big-num" id="homeLunarMain">—</div>
         <div class="sub-info">陰曆主命數</div>
-        <div style="margin-top:10px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.1);">
-            <div class="big-num" style="font-size:22px; color:var(--text);" id="homeLunarSoul">—</div>
-            <div class="sub-info">陰曆靈魂等級</div>
-        </div>
       </div>
     </div>
 
-    <div class="card">
-      <h3><span>雙軌生命結構與靈魂學制解析</span></h3>
+    <details class="card">
+      <summary style="cursor:pointer; font-weight:800;">進階方法說明：雙軌閱讀與七項學習提醒</summary>
       <div class="long-text">
-        <h4>▍為什麼需要看「陽曆」與「陰曆」兩套劇本？</h4>
-        <p>人生這場戲，其實我們都拿到了兩本劇本。大多數的命理分析只看見了你的「陽曆劇本」，這代表了你的<b>外在顯化、社會功能、職場角色</b>，以及你如何運用理性思維來處理世界上的問題。陽曆主命數，是你身上穿的那件制服，決定了社會如何識別你，也決定了你用什麼工具來開拓疆土。</p>
-        <p>然而，艾瑞克在二十年的教學現場發現，許多人的「卡點」並非來自外在能力不足，而是來自內在的衝突。這就是「陰曆劇本」的重要性。陰曆代表了你的<b>靈魂本質、潛意識安全感、情感需求</b>，以及那些在夜深人靜時才會浮現的真實渴望。它不像陽曆那樣顯眼，但它卻是支撐你整個人生大廈的地基。如果陽曆是車子的外型與馬力，陰曆就是這台車的底盤與油箱。</p>
-        <p>唯有當陽曆（顯化）與陰曆（靈魂）兩者同步運作，外在的追求能滿足內在的渴望，內在的安全感能支撐外在的挑戰時，生命結構才會進入「順流」狀態。這就是我們強調「雙軌並行」的原因。</p>
-        
-        <h4>▍七階靈魂等級：你在哪一個年級？</h4>
-        <p>在艾瑞克的結構藍圖中，我們將靈魂的成熟度與學習歷程，比喻為一套完整的「七階學制」。這不是階級高低之分，而是「目前修習課業」的不同。透過你的生日數字結構（包含是否有連線、是否有圈數），我們可以判定你目前的靈魂年級：</p>
-        <p><b>1. 靈魂幼稚園生 (探索期)</b>：這是最純真、單純的階段。你對世界充滿好奇，但經驗尚淺。你的功課是「嘗試」，需要像孩子一樣大膽犯錯，並學習依賴與信任引導者。你的直覺很強，但容易受情緒波動影響。</p>
-        <p><b>2. 靈魂小學生 (紀律期)</b>：進入了建立規矩的階段。你開始學習社會的SOP，重視對錯與標準。你的功課是「模仿與紀律」，透過有樣學樣來建立基礎生存能力，這階段最需要好的老師與榜樣。</p>
-        <p><b>3. 靈魂國中生 (群體期)</b>：開始有了同儕意識與叛逆心。你非常在乎朋友與歸屬感，甚至會為了群體而挑戰權威。你的功課是「人際互動」，在群體中找尋自己的定位，學會分辨益友與損友。</p>
-        <p><b>4. 靈魂高中生 (建構期)</b>：思維開始多元化，不再滿足於標準答案。你充滿創意與批判性思考，想要建構屬於自己的價值觀。你的功課是「定義自我」，從混亂中理出頭緒，為將來的獨立做準備。</p>
-        <p><b>5. 靈魂大學生 (真理期)</b>：進入了專精研究的領域。你對於某個領域有極深的熱情與鑽研，追求的是真理與本質。你的功課是「深度研究」，將知識轉化為智慧，並開始建立自己的專業權威。</p>
-        <p><b>6. 靈魂研究生 (覺察期)</b>：開始往內走，探討生命更深層的意義。你具備高度的獨立思考能力，常能看透事物的本質。你的功課是「內在覺察」，整合知識與靈性，並處理更深層的業力課題。</p>
-        <p><b>7. 傑出校友 (實踐期)</b>：這是一個特殊的階段，通常代表你的靈魂資歷已深，此生是帶著任務「回來服務」或「整合所學」的。你的功課不再是學習，而是「給予與實踐」，成為他人的燈塔，用身教來影響世界。</p>
+        <h4>▍陽曆與陰曆，提供兩個閱讀角度</h4>
+        <p>陽曆主命數用來整理你在社會、工作與關係中較常採取的外在慣性；陰曆主命數則用來整理你較在意的內在需求與情緒模式。</p>
+        <p>兩個角度不是用來定義你，而是幫助你對照：什麼情境容易讓你發揮天賦、什麼情境可能成為盲點，以及現在有哪些選擇方向可以多留意。</p>
+        <h4>▍七項學習提醒</h4>
+        <p>這是雙軌方法的進階閱讀。分類沒有高低，僅作為不同人生節奏與成長課題的整理參考。</p>
+        <p><b>1. 探索提醒</b>：留意嘗試、信任與累積經驗。</p>
+        <p><b>2. 紀律提醒</b>：留意規律、模仿與建立基礎。</p>
+        <p><b>3. 群體提醒</b>：留意歸屬感、人際互動與界線。</p>
+        <p><b>4. 建構提醒</b>：留意價值觀、創意與定義自我。</p>
+        <p><b>5. 深度提醒</b>：留意專注、研究與專業累積。</p>
+        <p><b>6. 覺察提醒</b>：留意內在整理與整合經驗。</p>
+        <p><b>7. 實踐提醒</b>：留意分享、整合所學與具體行動。</p>
       </div>
-    </div>
+    </details>
   </div>
 
   <div id="tab-matrix" class="tab-content">
     <div class="grid-layout">
-      <div class="card tip-box" data-tip="【陽曆顯化】代表你在社會、職場與社交場合中展現的才華天賦。">
-        <h3><span>陽曆顯化矩陣</span> <span style="font-size:12px; background:rgba(212,175,55,0.2); padding:2px 8px;">外在</span></h3>
+      <div class="card tip-box" data-tip="【陽曆主命數】用來整理你在社會、工作與關係中的外在慣性與天賦。">
+        <h3><span>陽曆主命數</span> <span style="font-size:12px; background:rgba(212,175,55,0.2); padding:2px 8px;">外在慣性</span></h3>
         <div style="font-size:30px; font-weight:900;" id="lifeYangFinal">—</div>
-        <p style="font-size:13px; color:var(--muted); margin-top:4px;">靈魂等級：<b id="solarSoul">—</b></p>
       </div>
-      <div class="card tip-box" data-tip="【陰曆靈魂】代表你內在潛意識、安全感來源與獨處時的真實面貌。">
-        <h3><span>陰曆靈魂矩陣</span> <span style="font-size:12px; background:rgba(0,240,255,0.1); padding:2px 8px; color:var(--cyan);">內在</span></h3>
+      <div class="card tip-box" data-tip="【陰曆主命數】用來整理你的內在需求、情緒模式與關係中的在意之處。">
+        <h3><span>陰曆主命數</span> <span style="font-size:12px; background:rgba(0,240,255,0.1); padding:2px 8px; color:var(--cyan);">內在需求</span></h3>
         <div style="font-size:30px; font-weight:900;" id="lifeYinFinal">—</div>
-        <p style="font-size:13px; color:var(--muted); margin-top:4px;">靈魂等級：<b id="lunarSoul">—</b></p>
       </div>
-      <div class="card tip-box" data-tip="【能量氣象】結合流年、流月與流日，計算出你目前的能量綜合頻率。">
-        <h3><span>今日氣象總評</span> <span id="weatherEmoji">⛅️</span></h3>
+      <div class="card tip-box" data-tip="【今日提醒】結合流年、流月與流日，提供你今天可留意的生命節奏。">
+        <h3><span>今日提醒</span> <span id="weatherEmoji">⛅️</span></h3>
         <div style="font-size:30px; font-weight:900; color:var(--gold);" id="overallBig">--%</div>
         <p id="weatherHint" style="font-size:13px; margin-top:4px;"></p>
       </div>
     </div>
 
     <div class="card" style="margin-top:4px;">
-      <h3><span>結構諮詢詢問</span></h3>
+      <h3><span>延伸提問</span></h3>
       <div class="long-text" style="margin-bottom:10px; border-top:none; padding-top:0;">
-        <h4>▍艾瑞克結構提問指南</h4>
-        <p>艾瑞克建議您將困惑轉化為「結構性提問」：</p>
-        <p><b>1. 針對「內外衝突」提問：</b><br>例如：陽曆1號人，陰曆9號人。問：「學長，我外在強勢但內心渴望奉獻，職場上常委屈，如何平衡？」</p>
-        <p><b>2. 針對「靈魂等級」提問：</b><br>例如：我是靈魂小學生。問：「我最近接了需要高度獨立的專案，壓力大，如何用小學生的模仿優勢過關？」</p>
+        <h4>▍艾瑞克提問指南</h4>
+        <p>你可以從天賦、盲點、人生節奏、關係模式或選擇方向開始提問：</p>
+        <p><b>例如：</b>「我在工作中常常先答應別人，之後才覺得消耗；我可以從哪個方向整理自己的界線？」</p>
       </div>
-      <textarea id="question" class="input" style="height:80px; font-size:16px;" placeholder="請輸入您想詢問的結構問題..."></textarea>
+      <textarea id="question" class="input" style="height:80px; font-size:16px;" placeholder="請輸入你想整理的問題..."></textarea>
       <button id="btnAskErick" class="btn">提交詢問</button>
       <div id="qaAnswer" style="margin-top:12px; font-size:14px; color:var(--muted); white-space:pre-wrap; border-top:1px solid rgba(255,255,255,0.1); padding-top:10px;"></div>
     </div>
@@ -233,7 +220,7 @@
 
   <div id="tab-trend" class="tab-content">
     <div class="card">
-      <h3><span>年度流年趨勢分析</span></h3>
+      <h3><span>年度流年提醒</span></h3>
       <div id="trendHeaderContainer" style="margin-bottom:10px; font-size:14px; color:var(--muted); line-height:1.6;">
          <div id="trendHeaderSolar" style="color:var(--gold);">陽曆流年：(等待分析)</div>
          <div id="trendHeaderLunar" style="color:var(--cyan);">陰曆流年：(等待分析)</div>
@@ -246,7 +233,7 @@
       <canvas id="monthChart" height="230"></canvas>
       
       <div style="margin-top:20px;">
-        <h4>▍全年度全息流月指引</h4>
+        <h4>▍全年度流月提醒</h4>
         <div id="monthsList" style="margin-top:10px;"></div>
       </div>
     </div>
@@ -336,17 +323,13 @@ document.getElementById('btnRunErick').addEventListener('click', async () => {
     const data = json.parsed;
 
     document.getElementById('homeSolarMain').textContent = data.solarMain;
-    document.getElementById('homeSolarSoul').textContent = data.solarSoul;
     document.getElementById('homeLunarMain').textContent = data.lunarMain;
-    document.getElementById('homeLunarSoul').textContent = data.lunarSoul;
     
-    solarTag.textContent = `陽曆：${data.solarSoul}`;
-    lunarTag.textContent = `陰曆：${data.lunarSoul}`;
+    solarTag.textContent = `陽曆主命數：${data.solarMain}`;
+    lunarTag.textContent = `陰曆主命數：${data.lunarMain}`;
     
     document.getElementById('lifeYangFinal').textContent = data.solarMain;
-    document.getElementById('solarSoul').textContent = data.solarSoul;
     document.getElementById('lifeYinFinal').textContent = data.lunarMain;
-    document.getElementById('lunarSoul').textContent = data.lunarSoul;
 
     if(json.overall_percent) {
         document.getElementById('overallBig').textContent = json.overall_percent + "%";
@@ -377,7 +360,7 @@ document.getElementById('btnRunErick').addEventListener('click', async () => {
         <p style="margin:0; font-size:15px; color:#e0e0e0;">
           今年您的陽曆流年走到了【${flowY}】，這是一個${FLOW_DESC[flowY].split('：')[0]}。<br>
           ${FLOW_DESC[flowY].split('：')[1]}<br><br>
-          建議您善用陽曆${data.solarMain}號人的特質，在行動上保持${parseInt(data.solarSoul)>=4?'彈性與創意':'紀律與執行力'}。
+          可以把這段時間當成整理行動節奏的提醒，留意哪些做法更符合你想前進的方向。
         </p>
       </div>
 
@@ -413,8 +396,6 @@ document.getElementById('btnAskErick').addEventListener('click', async () => {
       parsed: {
           solarMain: document.getElementById('lifeYangFinal').textContent,
           lunarMain: document.getElementById('lifeYinFinal').textContent,
-          solarSoul: document.getElementById('solarSoul').textContent,
-          lunarSoul: document.getElementById('lunarSoul').textContent,
           solarYear: document.getElementById('trendHeaderSolar').textContent 
       }
   };
