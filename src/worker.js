@@ -335,7 +335,7 @@ function calcFlowsWithTarget(birthY, birthM, birthD, targetY, targetM, targetD, 
     fmBase = targetM - 1;
     if (fmBase === 0) fmBase = 12;
   }
-  const fmStrRaw = String(fyBase) + String(fmBase).padStart(2,'0') + String(birthD).padStart(2,'0');
+  const fmStrRaw = String(birthY) + String(fmBase).padStart(2,'0') + String(birthD).padStart(2,'0');
   const fmRes = calcPath(sumDigits(fmStrRaw), sign);
 
   const fdStrRaw = String(birthY) + String(birthM).padStart(2,'0') + String(targetD).padStart(2,'0');
